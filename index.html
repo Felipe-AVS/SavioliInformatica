@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
   <meta name="description" content="Savioli Informática e Sistemas: desenvolvimento de sistemas, sites, suporte técnico, servidores e consultoria em TI para empresas.">
   <title>Savioli Informática e Sistemas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -312,6 +313,80 @@ p { color: var(--muted); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
+
+/* IDENTIDADE VISUAL SAVIOLI — paleta roxa e visual claro */
+:root {
+  --bg: #ffffff;
+  --surface: #faf8fd;
+  --surface-2: #f2eafb;
+  --line: #e8dff1;
+  --text: #21152e;
+  --muted: #6e6478;
+  --accent: #7628d8;
+  --accent-ink: #ffffff;
+  --radius: 20px;
+}
+body { background: var(--bg); color: var(--text); }
+p { color: var(--muted); }
+.label, .card-num, .card-tag, .feature-idx, .step { color: #7628d8; }
+:focus-visible { outline-color: #7628d8; }
+.btn-accent {
+  background: linear-gradient(110deg, #8d35ed 0%, #5a16a8 100%);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(111, 35, 201, .16);
+}
+.btn-accent:hover { box-shadow: 0 12px 28px rgba(111, 35, 201, .24); }
+.btn-outline { border-color: #d9c8ed; color: #4d236f; background: #fff; }
+.btn-outline:hover { border-color: #7628d8; color: #7628d8; background: #faf7ff; }
+.topbar { background: rgba(255,255,255,.88); border-bottom-color: #eee6f5; }
+.brand { gap: .7rem; }
+.brand-logo { width: 44px; height: 44px; object-fit: contain; flex: 0 0 auto; }
+.brand-name { color: #32104f; }
+.brand-sub { color: #786b86; }
+.menu a:not(.btn) { color: #6e6478; }
+.menu a:not(.btn):hover { color: #7628d8; }
+.hero::before {
+  background:
+    radial-gradient(48% 54% at 82% 8%, rgba(133, 48, 226, .13), transparent 72%),
+    linear-gradient(#eee6f5 1px, transparent 1px) 0 0 / 100% 64px,
+    linear-gradient(90deg, #eee6f5 1px, transparent 1px) 0 0 / 64px 100%;
+  opacity: .72;
+}
+.tag { color: #665573; border-color: #e8dff1; background: rgba(255,255,255,.88); }
+.dot { background: #8c35e8; box-shadow: 0 0 0 4px rgba(140,53,232,.14); }
+.hl { color: #7628d8; }
+.hero-metrics { border-top-color: #e8dff1; }
+.hero-metrics strong { color: #32104f; }
+.ticker { background: #f7f1fc; border-color: #e8dff1; }
+.ticker-track { color: #655272; }
+.ticker-track span::after { color: #8b35e8; }
+.section-dark { background: #faf8fd; border-color: #eee6f5; }
+.card, .timeline li, .form { background: #fff; border-color: #e8dff1; box-shadow: 0 8px 30px rgba(47,20,70,.035); }
+.card:hover { border-color: rgba(118,40,216,.42); background: #fdfbff; }
+.card-tag { border-color: rgba(118,40,216,.24); }
+.feature-list { border-top-color: #e8dff1; }
+.feature-list li { border-bottom-color: #e8dff1; }
+.timeline li::after { background: linear-gradient(90deg, #a64cff, #5a16a8); }
+.cta-box { background: linear-gradient(135deg, #8530df, #51118e); color: #fff; box-shadow: 0 18px 40px rgba(91,22,151,.16); }
+.cta-box h3 { color: #fff; }
+.cta-box p { color: rgba(255,255,255,.82); }
+.cta-box .btn-accent { background: #fff; color: #5c1a99; box-shadow: none; }
+.cta-box .btn-accent:hover { background: #f2e7ff; }
+.contact-list a { color: #32104f; }
+.contact-list a:hover { color: #7628d8; }
+.field label { color: #6e6478; }
+.field input, .field select, .field textarea { color: #21152e; background: #fff; border-color: #e1d5ed; }
+.field select option { background: #fff; color: #21152e; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: #8c35e8; box-shadow: 0 0 0 4px rgba(140,53,232,.12); }
+.form-status.ok { color: #4c8a36; }
+.footer { border-top-color: #e8dff1; background: #fff; }
+.copy { color: #81758d; }
+@media (max-width: 720px) {
+  .menu { background: #fff; border-bottom-color: #e8dff1; }
+  .brand-logo { width: 40px; height: 40px; }
+  .hero { padding-top: 4rem; }
+}
+
 </style>
 </head>
 <body>
@@ -319,7 +394,7 @@ p { color: var(--muted); }
   <header class="topbar" id="topo">
     <div class="container nav">
       <a href="#topo" class="brand" aria-label="Savioli Informática e Sistemas">
-        <span class="brand-mark" aria-hidden="true">S</span>
+        <img class="brand-logo" src="assets/logo-savioli.png" alt="" aria-hidden="true">
         <span class="brand-name">Savioli<span class="brand-sub">Informática &amp; Sistemas</span></span>
       </a>
       <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
@@ -338,9 +413,9 @@ p { color: var(--muted); }
     <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <p class="tag"><span class="dot"></span> Tecnologia para empresas que não podem parar</p>
-        <h1>Sistemas, redes e suporte<br>que <span class="hl">funcionam</span> de verdade.</h1>
-        <p class="hero-lead">Criamos sistemas sob medida, cuidamos da infraestrutura e dos computadores da sua empresa e garantimos que a sua equipe trabalhe sem travar.</p>
+        <p class="tag"><span class="dot"></span> Seu parceiro de tecnologia em Itu e região</p>
+        <h1>Tecnologia confiável para<br>o seu negócio <span class="hl">crescer.</span></h1>
+        <p class="hero-lead">Do suporte diário ao desenvolvimento de sistemas, ajudamos sua empresa a trabalhar com mais estabilidade, segurança e organização.</p>
         <div class="hero-cta">
           <a href="#contato" class="btn btn-accent">Solicitar orçamento <span aria-hidden="true">→</span></a>
           <a href="https://wa.me/5511995101704" class="btn btn-outline" target="_blank" rel="noopener">Chamar no WhatsApp</a>
@@ -456,8 +531,8 @@ p { color: var(--muted); }
           <p>Unimos desenvolvimento de software e infraestrutura de TI num único parceiro, para que a sua empresa não precise lidar com vários fornecedores. Nossa missão é tirar a tecnologia do caminho da sua operação e colocá-la a favor do seu crescimento.</p>
         </div>
         <aside class="cta-box">
-          <h3>Vamos tirar o seu projeto do papel?</h3>
-          <p>Conte o que você precisa e retornamos com uma proposta inicial, sem compromisso.</p>
+          <h3>Sua empresa merece um TI bem cuidado.</h3>
+          <p>Conte como sua empresa trabalha hoje. Vamos entender suas necessidades e indicar o melhor caminho.</p>
           <a href="#contato" class="btn btn-accent btn-block">Começar agora <span aria-hidden="true">→</span></a>
         </aside>
       </div>
@@ -533,7 +608,7 @@ p { color: var(--muted); }
   <footer class="footer">
     <div class="container footer-inner">
       <div class="brand brand-footer">
-        <span class="brand-mark" aria-hidden="true">S</span>
+        <img class="brand-logo" src="assets/logo-savioli.png" alt="" aria-hidden="true">
         <span class="brand-name">Savioli<span class="brand-sub">Informática &amp; Sistemas</span></span>
       </div>
       <p>(11) 99510-1704 · fesavi.negocios@gmail.com</p>
@@ -571,7 +646,6 @@ const EMAIL = "fesavi.negocios@gmail.com";
 
 const form = document.getElementById("contact-form");
 const status = form.querySelector(".form-status");
-const btnEmail = document.getElementById("btn-email");
 
 function validar() {
   let valido = true;
@@ -616,18 +690,6 @@ form.addEventListener("submit", (event) => {
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(montarMensagem())}`;
   window.open(url, "_blank", "noopener");
   mostrarStatus("Abrimos o WhatsApp com a sua mensagem pronta. É só enviar.", "ok");
-});
-
-// Enviar por e-mail (botão secundário)
-btnEmail.addEventListener("click", () => {
-  if (!validar()) {
-    mostrarStatus("Preencha os campos obrigatórios com dados válidos.", "err");
-    return;
-  }
-  const assunto = "Contato pelo site - Savioli";
-  const url = `mailto:${EMAIL}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(montarMensagem())}`;
-  window.location.href = url;
-  mostrarStatus("Abrimos o seu aplicativo de e-mail com a mensagem pronta.", "ok");
 });
 
 </script>
