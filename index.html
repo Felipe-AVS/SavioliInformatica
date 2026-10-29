@@ -8,7 +8,311 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <style>
+:root {
+  --bg: #0a0c0f;
+  --surface: #13161b;
+  --surface-2: #1a1e25;
+  --line: #262b34;
+  --text: #eef1f5;
+  --muted: #8a93a3;
+  --accent: #c6ff3d;
+  --accent-ink: #0a0c0f;
+  --radius: 18px;
+  --display: "Space Grotesk", system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+.container { width: min(100% - 48px, 1200px); margin-inline: auto; }
+
+h1, h2, h3 { font-family: var(--display); line-height: 1.08; letter-spacing: -0.03em; }
+h1 { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 700; }
+h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 600; }
+h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; }
+p { color: var(--muted); }
+
+.label {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+}
+.muted { color: var(--muted); }
+.body-lg { font-size: 1.1rem; margin-top: 1.2rem; max-width: 56ch; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* BOTÕES */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 1rem 1.6rem;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-accent { background: var(--accent); color: var(--accent-ink); }
+.btn-accent:hover { box-shadow: 0 10px 40px -8px rgba(198, 255, 61, 0.55); }
+.btn-outline { border-color: var(--line); color: var(--text); }
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.btn-sm { padding: 0.6rem 1.15rem; font-size: 0.92rem; }
+.btn-block { width: 100%; }
+
+/* TOPBAR */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(10, 12, 15, 0.75);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.nav { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+
+.brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.brand-mark {
+  width: 42px; height: 42px; display: grid; place-items: center;
+  background: var(--accent); color: var(--accent-ink);
+  font-family: var(--display); font-weight: 700; font-size: 1.4rem;
+  border-radius: 12px;
+}
+.brand-name { font-family: var(--display); font-weight: 700; font-size: 1.15rem; line-height: 1; letter-spacing: -0.02em; }
+.brand-sub { display: block; font-family: var(--body); font-weight: 500; font-size: 0.72rem; color: var(--muted); letter-spacing: 0; margin-top: 4px; }
+
+.menu { display: flex; align-items: center; gap: 2rem; }
+.menu a:not(.btn) { text-decoration: none; font-weight: 500; font-size: 0.95rem; color: var(--muted); transition: color 0.2s; }
+.menu a:not(.btn):hover { color: var(--text); }
+
+.menu-toggle {
+  display: none; background: none; border: none; cursor: pointer;
+  width: 42px; height: 42px; flex-direction: column; justify-content: center; align-items: center; gap: 7px;
+}
+.menu-toggle span { display: block; width: 24px; height: 2px; background: var(--text); transition: transform 0.25s ease, opacity 0.2s; }
+.menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(4.5px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] span:nth-child(2) { transform: translateY(-4.5px) rotate(-45deg); }
+
+/* HERO */
+.hero { padding: 7rem 0 5rem; position: relative; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 85% 0%, rgba(198, 255, 61, 0.12), transparent 70%),
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% 64px,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 64px 100%;
+  mask-image: radial-gradient(ellipse at top, #000 30%, transparent 75%);
+  opacity: 0.6;
+}
+
+.tag {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: var(--mono); font-size: 0.82rem; color: var(--muted);
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface);
+  margin-bottom: 2rem;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(198, 255, 61, 0.2); }
+
+.hl {
+  color: var(--accent);
+  position: relative; white-space: nowrap;
+}
+
+.hero-lead { font-size: 1.2rem; max-width: 60ch; margin: 2rem 0 2.5rem; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+.hero-metrics {
+  list-style: none;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  margin-top: 5rem; border-top: 1px solid var(--line);
+}
+.hero-metrics li { padding: 1.6rem 1.5rem 0 0; display: grid; gap: 0.25rem; }
+.hero-metrics strong { font-family: var(--display); font-size: 1.35rem; font-weight: 600; }
+.hero-metrics span { color: var(--muted); font-size: 0.95rem; }
+
+/* TICKER */
+.ticker { border-block: 1px solid var(--line); background: var(--surface); overflow: hidden; padding: 1.1rem 0; }
+.ticker-track {
+  display: flex; gap: 3rem; width: max-content;
+  animation: scroll 38s linear infinite;
+  font-family: var(--display); font-size: 1.3rem; font-weight: 500; color: var(--muted);
+}
+.ticker-track span { display: inline-flex; align-items: center; gap: 3rem; white-space: nowrap; }
+.ticker-track span::after { content: "✦"; color: var(--accent); font-size: 0.9rem; }
+@keyframes scroll { to { transform: translateX(-50%); } }
+
+/* SEÇÕES */
+.section { padding: 7rem 0; }
+.section-dark { background: var(--surface); border-block: 1px solid var(--line); }
+.section-head { max-width: 760px; margin-bottom: 4rem; }
+
+/* BENTO SERVIÇOS */
+.bento {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem;
+}
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+  display: flex; flex-direction: column;
+}
+.card:hover { border-color: rgba(198, 255, 61, 0.5); transform: translateY(-4px); background: var(--surface-2); }
+.card-wide { grid-column: span 2; }
+.card-num { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); margin-bottom: 2.5rem; }
+.card p { font-size: 0.97rem; }
+.card-tag {
+  margin-top: auto; padding-top: 1.5rem;
+  align-self: flex-start;
+  font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--accent);
+  border: 1px solid rgba(198, 255, 61, 0.3);
+  border-radius: 999px; padding: 0.35rem 0.8rem; margin-top: 1.5rem;
+}
+
+/* DIFERENCIAIS */
+.split { display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; }
+.feature-list { list-style: none; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.feature-list li {
+  display: grid; grid-template-columns: 56px 1fr; gap: 1rem;
+  padding: 1.8rem 0; border-bottom: 1px solid var(--line);
+}
+.feature-idx { font-family: var(--mono); color: var(--accent); font-size: 0.95rem; padding-top: 0.25rem; }
+.feature-list strong { font-family: var(--display); font-size: 1.2rem; font-weight: 600; display: block; margin-bottom: 0.35rem; }
+.feature-list p { font-size: 0.97rem; }
+
+/* PROCESSO */
+.timeline {
+  list-style: none;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem;
+  counter-reset: none;
+}
+.timeline li {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 2rem 1.8rem; position: relative; overflow: hidden;
+}
+.timeline li::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.timeline li:hover::after { transform: scaleX(1); }
+.step { font-family: var(--mono); color: var(--accent); font-size: 0.9rem; display: block; margin-bottom: 3rem; }
+.timeline p { font-size: 0.95rem; }
+
+/* SOBRE */
+.about { display: grid; grid-template-columns: 1.4fr 1fr; gap: 5rem; align-items: center; }
+.about h2 { margin-bottom: 0; }
+.about p:not(.label) + p { margin-top: 1rem; }
+.cta-box {
+  background: var(--accent); color: var(--accent-ink);
+  border-radius: 24px; padding: 2.8rem;
+}
+.cta-box h3 { font-size: 1.8rem; color: var(--accent-ink); }
+.cta-box p { color: rgba(10, 12, 15, 0.75); margin: 0.8rem 0 2rem; }
+.cta-box .btn-accent { background: var(--accent-ink); color: var(--accent); }
+.cta-box .btn-accent:hover { box-shadow: 0 10px 40px -8px rgba(0, 0, 0, 0.5); }
+
+/* CONTATO */
+.contact { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; }
+.contact-list { list-style: none; margin-top: 2.5rem; display: grid; gap: 1.6rem; }
+.contact-label { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.3rem; }
+.contact-list a { font-family: var(--display); font-size: 1.4rem; font-weight: 600; text-decoration: none; transition: color 0.2s; }
+.contact-list a:hover { color: var(--accent); }
+
+.form {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 24px;
+  padding: 2.5rem; display: grid; gap: 1.2rem;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.field { display: grid; gap: 0.5rem; }
+.field label { font-size: 0.85rem; font-weight: 500; color: var(--muted); }
+.field input, .field select, .field textarea {
+  font: inherit; color: var(--text);
+  background: var(--bg); border: 1.5px solid var(--line); border-radius: 12px;
+  padding: 0.85rem 1rem; width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field select option { background: var(--surface); }
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(198, 255, 61, 0.12);
+}
+.field textarea { resize: vertical; }
+.field .invalid { border-color: #ff6b6b; }
+.form-status { font-size: 0.95rem; min-height: 1.4em; color: var(--muted); }
+.form-status.ok { color: var(--accent); }
+.form-status.err { color: #ff8a8a; }
+.form-actions { display: grid; gap: 0.8rem; }
+.form-note { font-size: 0.85rem; color: var(--muted); }
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--line); padding: 3rem 0; }
+.footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+.footer-inner p { font-size: 0.92rem; }
+.brand-footer { pointer-events: none; }
+.copy { width: 100%; text-align: left; font-size: 0.85rem; color: var(--muted); }
+
+/* RESPONSIVO */
+@media (max-width: 960px) {
+  .bento { grid-template-columns: 1fr 1fr; }
+  .card-wide { grid-column: span 2; }
+  .split, .about, .contact { grid-template-columns: 1fr; gap: 3rem; }
+  .timeline { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 720px) {
+  .container { width: min(100% - 32px, 1200px); }
+  .menu-toggle { display: flex; }
+  .menu {
+    position: absolute; top: 76px; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+    padding: 0.5rem 16px 1.5rem;
+    transform: translateY(-8px); opacity: 0; pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+  .menu a:not(.btn) { padding: 1rem 0; border-bottom: 1px solid var(--line); }
+  .menu .btn { margin-top: 1rem; }
+  .nav { position: relative; }
+  .hero { padding: 4.5rem 0 3.5rem; }
+  .hero-metrics { grid-template-columns: 1fr; margin-top: 3rem; }
+  .hero-metrics li { padding: 1.2rem 0; border-bottom: 1px solid var(--line); }
+  .section { padding: 4.5rem 0; }
+  .bento, .timeline { grid-template-columns: 1fr; }
+  .card-wide { grid-column: span 1; }
+  .form { padding: 1.6rem; }
+  .form-row { grid-template-columns: 1fr; }
+  .feature-list li { grid-template-columns: 40px 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+</style>
 </head>
 <body>
 
@@ -216,7 +520,11 @@
             <label for="mensagem">Mensagem *</label>
             <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
           </div>
-          <button type="submit" class="btn btn-accent btn-block">Enviar mensagem <span aria-hidden="true">→</span></button>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-accent btn-block">Enviar pelo WhatsApp <span aria-hidden="true">→</span></button>
+            <button type="button" id="btn-email" class="btn btn-outline btn-block">Enviar por e-mail</button>
+          </div>
+          <p class="form-note">Ao enviar, abrimos o WhatsApp ou o e-mail com a sua mensagem pronta. Você só precisa confirmar o envio.</p>
           <p class="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -234,6 +542,95 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+// Ano automático no rodapé
+document.getElementById("ano").textContent = new Date().getFullYear();
+
+// Menu mobile
+const toggle = document.querySelector(".menu-toggle");
+const menu = document.getElementById("menu");
+
+function fecharMenu() {
+  menu.classList.remove("open");
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-label", "Abrir menu");
+}
+
+toggle.addEventListener("click", () => {
+  const aberto = menu.classList.toggle("open");
+  toggle.setAttribute("aria-expanded", String(aberto));
+  toggle.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+});
+
+menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", fecharMenu));
+
+// Formulário
+// Não há servidor para receber os dados. Por isso, o formulário monta a mensagem
+// e abre o WhatsApp ou o e-mail do próprio visitante, já preenchidos.
+const WHATSAPP = "5511995101704";
+const EMAIL = "fesavi.negocios@gmail.com";
+
+const form = document.getElementById("contact-form");
+const status = form.querySelector(".form-status");
+const btnEmail = document.getElementById("btn-email");
+
+function validar() {
+  let valido = true;
+  form.querySelectorAll("[required]").forEach((campo) => {
+    const vazio = !campo.value.trim();
+    const emailInvalido = campo.type === "email" && campo.value && !/^\S+@\S+\.\S+$/.test(campo.value);
+    campo.classList.toggle("invalid", vazio || emailInvalido);
+    if (vazio || emailInvalido) valido = false;
+  });
+  return valido;
+}
+
+function montarMensagem() {
+  const dados = new FormData(form);
+  const linhas = [
+    "Olá! Vim pelo site da Savioli.",
+    "",
+    `Nome: ${dados.get("nome") || "-"}`,
+    `Empresa: ${dados.get("empresa") || "-"}`,
+    `E-mail: ${dados.get("email") || "-"}`,
+    `Telefone: ${dados.get("telefone") || "-"}`,
+    `Serviço de interesse: ${dados.get("servico") || "-"}`,
+    "",
+    "Mensagem:",
+    dados.get("mensagem") || "-",
+  ];
+  return linhas.join("\n");
+}
+
+function mostrarStatus(texto, tipo) {
+  status.className = `form-status ${tipo}`;
+  status.textContent = texto;
+}
+
+// Enviar pelo WhatsApp (botão principal)
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!validar()) {
+    mostrarStatus("Preencha os campos obrigatórios com dados válidos.", "err");
+    return;
+  }
+  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(montarMensagem())}`;
+  window.open(url, "_blank", "noopener");
+  mostrarStatus("Abrimos o WhatsApp com a sua mensagem pronta. É só enviar.", "ok");
+});
+
+// Enviar por e-mail (botão secundário)
+btnEmail.addEventListener("click", () => {
+  if (!validar()) {
+    mostrarStatus("Preencha os campos obrigatórios com dados válidos.", "err");
+    return;
+  }
+  const assunto = "Contato pelo site - Savioli";
+  const url = `mailto:${EMAIL}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(montarMensagem())}`;
+  window.location.href = url;
+  mostrarStatus("Abrimos o seu aplicativo de e-mail com a mensagem pronta.", "ok");
+});
+
+</script>
 </body>
 </html>
