@@ -3,25 +3,25 @@ document.getElementById("ano").textContent = new Date().getFullYear();
 
 // Menu mobile
 const toggle = document.querySelector(".menu-toggle");
-const navLinks = document.querySelector(".nav-links");
+const menu = document.getElementById("menu");
+
+function fecharMenu() {
+  menu.classList.remove("open");
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-label", "Abrir menu");
+}
 
 toggle.addEventListener("click", () => {
-  const aberto = navLinks.classList.toggle("open");
+  const aberto = menu.classList.toggle("open");
   toggle.setAttribute("aria-expanded", String(aberto));
   toggle.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
 });
 
-navLinks.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("open");
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "Abrir menu");
-  });
-});
+menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", fecharMenu));
 
-// Validação e envio do formulário
-// Por enquanto mostra apenas uma confirmação. Para receber os contatos de verdade,
-// troque o bloco "simulação" por um envio real (ex.: Formspree, endpoint próprio ou WhatsApp).
+// Formulário
+// Hoje apenas valida e mostra a confirmação. Para receber os contatos por e-mail,
+// conecte o envio a um serviço (ex.: Formspree) ou direcione para o WhatsApp.
 const form = document.getElementById("contact-form");
 const status = form.querySelector(".form-status");
 
@@ -42,7 +42,6 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  // simulação de envio
   status.className = "form-status ok";
   status.textContent = "Mensagem recebida! Retornaremos em breve.";
   form.reset();
